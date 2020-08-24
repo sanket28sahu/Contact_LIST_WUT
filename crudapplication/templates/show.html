@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<h2>Contact Book</h2>
+  <p>List of Contacts Available in Database</p>
+  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+  <br>
+<table class="table table-responsive" id="example">
+  <thead>
+    <tr>
+      <!--<th scope="col">Contact ID</th>-->
+      <th scope="col">Contact Name</th>
+      <th scope="col">Contact Email</th>
+      <th scope="col">Contact Phone No.</th>
+      <th scope="col">Image</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody id="myTable">
+  {%  for employee in employees %}
+    <tr>
+      <!--<th scope="row">{{ employee.eid}}</th>-->
+      <td>{{ employee.ename}}</td>
+      <td>{{ employee.eemail}}</td>
+      <td>{{ employee.econtact}}</td>
+      <td><img src="{{ employee.eimage.url }}" height="100px" width="100px"/></td>
+      <td>
+          <a href="/edit/{{ employee.id }}" class="btn btn-primary">Edit</a>
+          <a href="/delete/{{ employee.id }}" class="btn btn-danger">Delete</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<br>
+
+<a href="/emp" class="btn btn-primary align-right">Add Contact</a>
+</div>
+
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+<script>
+    $(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+
+</body>
+</html>
